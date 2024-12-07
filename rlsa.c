@@ -2,6 +2,8 @@
 #include<Python.h>
 #include<numpy/arrayobject.h>
 #include<stdbool.h>
+#include <android/log.h>
+
 
 /*
  Function : get_horizontal_smeared_image
@@ -133,6 +135,7 @@ int* get_vertical_smeared_image(int* image, long int rows, long int cols, int ra
 */
 int* rlsa_smear_c(int* image, long int rows, long int cols, int range)
 {
+    __android_log_print(0, "REFLOW", "beginning smear\n");
     // create a pointer to store the output of run-length smearing
     int* out = NULL;
 
