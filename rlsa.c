@@ -135,7 +135,7 @@ int* get_vertical_smeared_image(int* image, long int rows, long int cols, int ra
 */
 int* rlsa_smear_c(int* image, long int rows, long int cols, int range)
 {
-    __android_log_print(0, "REFLOW", "beginning smear\n");
+    __android_log_print(ANDROID_LOG_INFO, "REFLOW", "beginning smear\n");
     // create a pointer to store the output of run-length smearing
     int* out = NULL;
 
