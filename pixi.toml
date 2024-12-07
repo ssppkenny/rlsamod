@@ -1,0 +1,21 @@
+[project]
+authors = ["Sergey Mikhno <sergey.mikhno@galenica.com>"]
+channels = ["conda-forge"]
+description = "Add a short description here"
+name = "rlsa_new"
+platforms = ["osx-arm64"]
+version = "0.1.0"
+
+[tasks]
+
+[dependencies]
+python = "3.11.*"
+cython = ">=3.0.11,<4"
+numpy = "1.23.*"
+jupyterlab = ">=4.3.2,<5"
+matplotlib = ">=3.9.3,<4"
+black = ">=24.10.0,<25"
+
+
+[pypi-dependencies]
+opencv-python = "~=4.10.0.84"
