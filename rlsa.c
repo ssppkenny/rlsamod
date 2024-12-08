@@ -56,11 +56,12 @@ int* get_horizontal_smeared_image(int* image, long int rows, long int cols, int 
                 if( j - prev_black <= range )
                 {
                     // mark all pixels from the previous black pixel to current pixel as black
-                    __android_log_print(ANDROID_LOG_INFO, "REFLOW", "mark pixels at index %d\n", k);
+                    __android_log_print(ANDROID_LOG_INFO, "REFLOW", "mark pixels\n");
                     for(int k = prev_black; k < j; ++k)
                         smeared[i * cols + k] = 0;
                 }
 
+                __android_log_print(ANDROID_LOG_INFO, "REFLOW", "store the position\n");
                 // store the position of current black pixel
                 prev_black = j;
             }
