@@ -2,7 +2,7 @@
 #include<Python.h>
 #include<numpy/arrayobject.h>
 #include<stdbool.h>
-#include <android/log.h>
+// #include <android/log.h>
 
 
 /*
@@ -20,7 +20,6 @@ int* get_horizontal_smeared_image(int* image, long int rows, long int cols, int 
 {
     // create a variable to store the output, and allocated memory to it
 
-    __android_log_print(ANDROID_LOG_INFO, "REFLOW", "starting horizontal with cols %ld, rows %ld, range %d\n", cols, rows, range);
     int* smeared = (int*)malloc(rows * cols * sizeof(int));
 
     // repeat the following for all rows in the image
@@ -30,25 +29,21 @@ int* get_horizontal_smeared_image(int* image, long int rows, long int cols, int 
          int j = 0;
         // find the first pixel in this image which is 0
 
-        __android_log_print(ANDROID_LOG_INFO, "REFLOW", "before while");
         while(j < cols && image[i * cols + j] != 0)
         {
             // copy the value of this pixel in the smeared image variable
             smeared[i * cols + j] = 255;
             ++j;
         }
-        __android_log_print(ANDROID_LOG_INFO, "REFLOW", "after while");
 
         // store the position of this pixel in a variable, to be used when calculating the range
         int prev_black = j;
 
-        __android_log_print(ANDROID_LOG_INFO, "REFLOW", "j = %d\d", j);
 
         // repeat the following for the remaining pixels
         for(; j < cols; ++j)
         {
             // copy the value of current pixel in the smeared image variable
-            __android_log_print(ANDROID_LOG_INFO, "REFLOW", "copy value to index %ld\n", i * cols + j);
             smeared[i * cols + j] = image[ i * cols + j];
 
             // if the current pixel is black ( 0 ),
@@ -58,12 +53,10 @@ int* get_horizontal_smeared_image(int* image, long int rows, long int cols, int 
                 if( j - prev_black <= range )
                 {
                     // mark all pixels from the previous black pixel to current pixel as black
-                    __android_log_print(ANDROID_LOG_INFO, "REFLOW", "mark pixels\n");
                     for(int k = prev_black; k < j; ++k)
                         smeared[i * cols + k] = 0;
                 }
 
-                __android_log_print(ANDROID_LOG_INFO, "REFLOW", "store the position\n");
                 // store the position of current black pixel
                 prev_black = j;
             }
@@ -88,7 +81,6 @@ int* get_horizontal_smeared_image(int* image, long int rows, long int cols, int 
 */
 int* get_vertical_smeared_image(int* image, long int rows, long int cols, int range)
 {
-    __android_log_print(ANDROID_LOG_INFO, "REFLOW", "starting vertical with cols %ld, rows %ld, range %d\n", cols, rows, range);
     // create a variable to store the output, and allocated memory to it
     int* smeared = (int*)malloc(rows * cols * sizeof(int));
 
@@ -147,15 +139,12 @@ int* get_vertical_smeared_image(int* image, long int rows, long int cols, int ra
 */
 int* rlsa_smear_c(int* image, long int rows, long int cols, int range)
 {
-    __android_log_print(ANDROID_LOG_INFO, "REFLOW", "beginning smear\n");
     // create a pointer to store the output of run-length smearing
     int* out = NULL;
 
     // perform horizontal smearing on the input image and store the result in out
-    __android_log_print(ANDROID_LOG_INFO, "REFLOW", "before horizontal\n");
     out = get_horizontal_smeared_image(image, rows, cols, range);
     // perform vertical smearing on out and store this result in out
-    __android_log_print(ANDROID_LOG_INFO, "REFLOW", "before vertical\n");
     out = get_vertical_smeared_image(out, rows, cols, range);
 
     // return this python array object
