@@ -19,9 +19,12 @@
 int* get_horizontal_smeared_image(int* image, long int rows, long int cols, int range)
 {
     // create a variable to store the output, and allocated memory to it
+
+    __android_log_print(ANDROID_LOG_INFO, "REFLOW", "starting horizontal with cols %ld, rows %ld, range %d\n", cols, rows, range);
     int* smeared = (int*)malloc(rows * cols * sizeof(int));
 
     // repeat the following for all rows in the image
+
     for(int i = 0; i < rows; ++i)
     {
          int j = 0;
@@ -77,6 +80,7 @@ int* get_horizontal_smeared_image(int* image, long int rows, long int cols, int 
 */
 int* get_vertical_smeared_image(int* image, long int rows, long int cols, int range)
 {
+    __android_log_print(ANDROID_LOG_INFO, "REFLOW", "starting vertical with cols %ld, rows %ld, range %d\n", cols, rows, range);
     // create a variable to store the output, and allocated memory to it
     int* smeared = (int*)malloc(rows * cols * sizeof(int));
 
@@ -140,10 +144,10 @@ int* rlsa_smear_c(int* image, long int rows, long int cols, int range)
     int* out = NULL;
 
     // perform horizontal smearing on the input image and store the result in out
-    printf("horizontal\n");
+    __android_log_print(ANDROID_LOG_INFO, "REFLOW", "before horizontal\n");
     out = get_horizontal_smeared_image(image, rows, cols, range);
     // perform vertical smearing on out and store this result in out
-    printf("vertical\n");
+    __android_log_print(ANDROID_LOG_INFO, "REFLOW", "before vertical\n");
     out = get_vertical_smeared_image(out, rows, cols, range);
 
     // return this python array object
