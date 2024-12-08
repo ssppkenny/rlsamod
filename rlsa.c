@@ -29,12 +29,15 @@ int* get_horizontal_smeared_image(int* image, long int rows, long int cols, int 
     {
          int j = 0;
         // find the first pixel in this image which is 0
+
+        __android_log_print(ANDROID_LOG_INFO, "REFLOW", "before while");
         while(image[i * cols + j] != 0 && j < cols)
         {
             // copy the value of this pixel in the smeared image variable
             smeared[i * cols + j] = 255;
             ++j;
         }
+        __android_log_print(ANDROID_LOG_INFO, "REFLOW", "after while");
 
         // store the position of this pixel in a variable, to be used when calculating the range
         int prev_black = j;
@@ -43,6 +46,7 @@ int* get_horizontal_smeared_image(int* image, long int rows, long int cols, int 
         for(; j < cols; ++j)
         {
             // copy the value of current pixel in the smeared image variable
+            __android_log_print(ANDROID_LOG_INFO, "REFLOW", "copy value to index %ld\n", i * cols + j);
             smeared[i * cols + j] = image[ i * cols + j];
 
             // if the current pixel is black ( 0 ),
@@ -52,6 +56,7 @@ int* get_horizontal_smeared_image(int* image, long int rows, long int cols, int 
                 if( j - prev_black <= range )
                 {
                     // mark all pixels from the previous black pixel to current pixel as black
+                    __android_log_print(ANDROID_LOG_INFO, "REFLOW", "mark pixels at index %d\n", k);
                     for(int k = prev_black; k < j; ++k)
                         smeared[i * cols + k] = 0;
                 }
